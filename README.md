@@ -1,8 +1,8 @@
 # VideoTrim
 _A python package to trim a large amount of videos conveniently using ffmpeg_
   ### Prerequisites
-  1. ffmpeg added to your PATH or added to the package folder  
-  2. Python 3.8 (this program uses some python3.8 syntax)
+  1. [ffmpeg](https://ffmpeg.org/download.html) added to your PATH or added to the package folder  
+  2. [Python 3.8](https://www.python.org/downloads/) (because this package uses some python 3.8 syntax, so you can only use python3.8 to run it)
   ### Usage:
   **$ python trim.py [-h]  [-i infolder] [-o outfolder] [-c config.txt] [-w num_of_max_workers]**  
   _before run trim.py you first should write a configure file, which will tell the program how to trim your videos._  
