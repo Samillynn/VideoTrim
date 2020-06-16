@@ -1,31 +1,25 @@
 import os
-from collections import namedtuple
-
-TrimConfig = namedtuple('TrimConfig', 'infle t_start t_end outfile')
-
-def parseOneVideo(s):
-    initialLines = s.split('\n')
-    lines = list()
-    for line in initialLines:
-        if line.find('//') != -1:
-            line = line[:line.find('//')]
-            if line:
-                lines.append(line)
-    videoName = lines[0]
-    basename, ext = os.path.splitext(videoName)
-    trimConfigs = []
-    for index, line in enumerate(lines[1:], 1):
-        attrs = list(filter(None, line.replace(' ', '').split(',')))
-        if len(attrs) == 2:
-            attrs.append(basename + str(index) + '.mp4')
-        trimConfigs.append(TrimConfig(videoName, *attrs))
-    return videoName, trimConfigs
+from itertools import count
+from typing import Iterator, Tuple
 
 
-class Parser:
-    def __init__(self, infile):
-        self.parsee = open(infile).read()
+def deduplicate(line: str) -> str:
+    """ remove all spaces and comments from a string and return the deduplicated one """
+    line = line[:pos] if (pos := line.find('//')) != -1 else line
+    return line.replace(' ', '')
 
-    def __iter__(self):
-        for videoConfig in filter(None, self.parsee.split('#')):
-            yield parseOneVideo(videoConfig)
+
+def parse(filename: str, outType='mp4') -> Iterator[Tuple[str, str, str, str]]:
+    """ parse a configuration file and yield (infile, t_start, t_end, outfile) each time"""
+    config = open(filename).read().splitlines()
+    for oldline in config:
+        if line := deduplicate(oldline):
+            if line.startswith('#'):
+                infile = line[1:]
+                basename = infile[:infile.rfind('.')]
+                subCounter = count(1)
+            else:
+                attrs = [attr for attr in line.split(',') if attr]
+                if len(attrs) == 2:
+                    attrs.append(f'{basename}-{next(subCounter)}.{outType}')
+                yield infile, *attrs

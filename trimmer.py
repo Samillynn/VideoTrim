@@ -3,7 +3,7 @@ from os.path import join as pathjoin
 import subprocess
 
 def trim(infile, t_start, t_end, outfile):
-    subprocess.run(f'ffmpeg -i {infile} -ss {t_start} -to {t_end} -c copy -f mp4 -copyts {outfile + ".part"}')
+    subprocess.run(f'ffmpeg -ss {t_start} -i {infile} -to {t_end} -c copy -f mp4 -copyts {outfile + ".part"}')
     os.rename(outfile + '.part', outfile)
 
 
