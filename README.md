@@ -1,2 +1,2 @@
 # VideoTrim
-A python package to trim a larger amount of videos conveniently using ffmpeg
+A python package to trim a large amount of videos conveniently using ffmpeg
