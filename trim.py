@@ -4,9 +4,9 @@ from parseCmd import parseArgs
 from trimmer import Trimmer
 
 def main():
-    configFile, infolder, outfolder, max_workers = parseArgs()
+    configFile, infolder, outfolder, maxWorkers = parseArgs()
     trimmer = Trimmer(infolder, outfolder)
-    pool = ProcessPoolExecutor(max_workers)
+    pool = ProcessPoolExecutor(maxWorkers)
     for trimConfig in parse(configFile):
         pool.submit(trimmer.trim, trimConfig)
 
