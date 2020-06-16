@@ -50,8 +50,8 @@ _A python package to trim a large amount of videos conveniently using ffmpeg_
     3, 4,
     4, 5,
     // ...
-     
-   ###Notes
-   1. The program will not download the file if the output folder consists of the file  
-      so feel free to run trim.py multiple times.
+    
+   ### Notes
+1. The program will not download the file if the output folder consists of the file  
+so feel free to run trim.py multiple times.
     
