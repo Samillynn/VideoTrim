@@ -2,7 +2,7 @@
 _A python package to trim a large amount of videos conveniently using ffmpeg_
 
   ### Usage:
-  **$ python trim.py [-h]  [-i infolder] [-o outfolder] [-c config.txt] [-w num_of_max_workers]  **
+  **$ python trim.py [-h]  [-i infolder] [-o outfolder] [-c config.txt] [-w num_of_max_workers]**  
   _before run trim.py you first should write a configure file, which will tell the program how to trim your videos._  
   [See here to write a configure file for trim.py](#how-to-write-the-configuration-file)
   ### Options
