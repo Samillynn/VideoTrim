@@ -1,9 +1,9 @@
 # VideoTrim
 _A python package to trim a large amount of videos conveniently using ffmpeg_
 
-### Usage:
-  $ python trim.py [-h]  [-i infolder] [-o outfolder] [-c config.txt] [-w num_of_max_workers]  
-  before run trim.py you first should write a configure file, which will tell the program how to trim your videos.  
+  ### Usage:
+  **$ python trim.py [-h]  [-i infolder] [-o outfolder] [-c config.txt] [-w num_of_max_workers]  **
+  _before run trim.py you first should write a configure file, which will tell the program how to trim your videos._  
   [See here to write a configure file for trim.py](#how-to-write-the-configuration-file)
   ### Options
     -h, --help:     
@@ -38,17 +38,12 @@ _A python package to trim a large amount of videos conveniently using ffmpeg_
                               // the output file will be named demo{x}.mp4
                               // x means it is the xth output video using the current input video
                               
-    
-    
-    
+       
     #example.flv              // this program support different type of input video
     1, 4, example1.flv        // also different format of output video 
     134, 09:00
                         
-    
-    
-    
-    
+     
     #another_example.mp4
     1, 2, 
     2, 3
@@ -56,5 +51,7 @@ _A python package to trim a large amount of videos conveniently using ffmpeg_
     4, 5,
     // ...
      
-   
+   ###Notes
+   1. The program will not download the file if the output folder consists of the file  
+      so feel free to run trim.py multiple times.
     
