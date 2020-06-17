@@ -3,7 +3,7 @@ from collections import namedtuple
 CmdArgs = namedtuple('CmdArgs', 'configFile infolder outfolder max_workers')
 
 
-def parseArgs():
+def parse_args():
     argparser = argparse.ArgumentParser()
     argparser.add_argument('-i', '--infolder',
                            help='configure where to find input videos', default='.')

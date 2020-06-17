@@ -1,4 +1,3 @@
-import os
 from itertools import count
 from typing import Iterator, Tuple
 
@@ -9,17 +8,17 @@ def deduplicate(line: str) -> str:
     return line.replace(' ', '')
 
 
-def parse(filename: str, outType='mp4') -> Iterator[Tuple[str, str, str, str]]:
-    """ parse a configuration file and yield (infile, t_start, t_end, outfile) each time"""
+def parse(filename: str, output_t='mp4') -> Iterator[Tuple[str, str, str, str]]:
+    """ parse a configuration file and yield tuple(infile, t_start, t_end, outfile) each time"""
     config = open(filename).read().splitlines()
     for oldline in config:
         if line := deduplicate(oldline):
             if line.startswith('#'):
                 infile = line[1:]
                 basename = infile[:infile.rfind('.')]
-                subCounter = count(1)
+                counter = count(1)
             else:
-                attrs = [attr for attr in line.split(',') if attr]
-                if len(attrs) == 2:
-                    attrs.append(f'{basename}-{next(subCounter)}.{outType}')
-                yield infile, *attrs
+                args = [arg for arg in line.split(',') if arg]
+                if len(args) == 2:
+                    args.append(f'{basename}-{next(counter)}.{output_t}')
+                yield tuple(infile, *args)
