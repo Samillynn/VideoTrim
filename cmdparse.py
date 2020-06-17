@@ -1,6 +1,6 @@
 import argparse
 from collections import namedtuple
-CmdArgs = namedtuple('CmdArgs', 'configFile infolder outfolder max_workers')
+CmdArgs = namedtuple('CmdArgs', 'config_file infolder outfolder max_workers')
 
 
 def parse_args():
