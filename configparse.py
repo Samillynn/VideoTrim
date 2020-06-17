@@ -14,7 +14,7 @@ def parse(filename: str, output_t='mp4') -> Iterator[Tuple[str, str, str, str]]:
     for oldline in config:
         if line := deduplicate(oldline):
             if line.startswith('#'):
-                infile = line[1:]
+                infile = line[1:].strip()
                 basename = infile[:infile.rfind('.')]
                 counter = count(1)
             else:
