@@ -1,6 +1,6 @@
 from concurrent.futures import ProcessPoolExecutor
-from parseConfig import parse
-from parseCmd import parseArgs
+from configparse import parse
+from cmdparse import parseArgs
 from trimmer import Trimmer
 
 def main():
