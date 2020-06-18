@@ -29,8 +29,8 @@ class Trimmer:
 def main():
     config, infolder, outfolder, max_workers = parse_args()
     trimmer = Trimmer(infolder, outfolder, max_workers)
-    parser = Parser()
-    config_lst = parser.run(config, infolder)
+    parser = Parser(infolder, config)
+    config_lst = parser.run()
     trimmer.run(config_lst)
 
 

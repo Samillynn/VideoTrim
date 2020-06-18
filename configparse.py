@@ -14,23 +14,21 @@ def deduplicate(line: str) -> str:
 
 
 class Parser:
-    def __init__(self):
-        self.infolder = None
-        self.file_lst = None
-
-    def run(self, config='config.txt', infolder='.'):
-        config_lst = list()
+    def __init__(self, infolder, config):
         self.infolder = infolder
         self.file_lst = os.listdir(infolder)
-        for config_obj in self.parse(config):
-            self.check(config_obj)
+        self.config = config
+
+    def run(self):
+        config_lst = list()
+        for config_obj in self.parse():
+            self._check_one(config_obj)
             config_lst.append(config_obj)
         return config_lst
 
-    @staticmethod
-    def parse(filename: str, output_t='mp4') -> Iterator[Tuple[str, str, str, str]]:
+    def parse(self) -> Iterator[Tuple[str, str, str, str]]:
         """ parse a configuration file and yield tuple(infile, t_start, t_end, outfile) each time"""
-        config = open(filename).read().splitlines()
+        config = open(self.config).read().splitlines()
         for oldline in config:
             if line := deduplicate(oldline):
                 if line.startswith('#'):
@@ -40,10 +38,10 @@ class Parser:
                 else:
                     args = [arg for arg in line.split(',') if arg]
                     if len(args) == 2:
-                        args.append(f'{basename}_clip_{next(counter)}.{output_t}')
+                        args.append(f'{basename}_clip_{next(counter)}.mp4')
                     yield ConfigObj(infile, *args)
 
-    def check(self, config_obj):
+    def _check_one(self, config_obj):
         infile, t_start, t_end, oufile = config_obj
         if infile not in self.file_lst:
             raise FileNotFoundError(f'Can not find {infile} in input folder {self.infolder}')
