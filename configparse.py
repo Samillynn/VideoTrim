@@ -80,7 +80,7 @@ class Parser:
                     else:
                         logging.debug(f"Not recognised: '{line}'")
 
-                    yield ConfigObj(file_in, *args)
+                    yield ConfigObj(filename, *args)
 
     def is_valid(self, job) -> bool:
 

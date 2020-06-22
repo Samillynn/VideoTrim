@@ -19,7 +19,7 @@ class Trimmer:
         if file_out not in os.listdir(self.dir_out):
             file_out = pathjoin(self.dir_out, file_out)
             subprocess.run(
-                f'ffmpeg -ss {t_start} -i "{file_in}" -to {t_end} -c copy -f mp4 -copyts "{file_out + ".part"}"',
+                f'ffmpeg -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
                 shell=True,
             )
             os.rename(file_out + ".part", file_out)
@@ -30,9 +30,10 @@ class Trimmer:
             pool.submit(self.perform_trim, job)
 
 
-def main():
+def main(config="", dir_in="", dir_out="", max_workers=4):
     # get user inputs
-    config, dir_in, dir_out, max_workers = parse_args()
+    if config == "":
+        config, dir_in, dir_out, max_workers = parse_args()
 
     # instantiate Parser
     parser = Parser(dir_in, config)
@@ -48,4 +49,13 @@ def main():
 
 
 if __name__ == "__main__":
+    config = ""
+    dir_in = ""
+    dir_out = ""
+    max_workers = 4
+
+    # pass in parameters directly
+    main(config, dir_in, dir_out, max_workers)
+
+    # use command line
     main()
