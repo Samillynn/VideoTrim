@@ -10,7 +10,7 @@ ConfigObj = namedtuple('ConfigObj', 'infile t_start t_end outfile')
 def deduplicate(line: str) -> str:
     """ remove all spaces and comments from a string and return the deduplicated one """
     line = line[:pos] if (pos := line.find('//')) != -1 else line
-    return line.replace(' ', '')
+    return line.replace(' ', '').replace('\t', '')
 
 
 class Parser:
