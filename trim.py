@@ -17,7 +17,7 @@ class Trimmer:
         infile = pathjoin(self.infolder, infile)
         if outfile not in os.listdir(self.outfolder):
             outfile = pathjoin(self.outfolder, outfile)
-            subprocess.run(f'ffmpeg -ss {t_start} -i "{infile}" -to {t_end} -c copy -f mp4 -copyts "{outfile + ".part"}"', shell=True)
+            subprocess.run(f'ffmpeg -ss {t_start} -i "{infile}" -to {t_end} -f mp4 -copyts "{outfile + ".part"}"', shell=True)
             os.rename(outfile + '.part', outfile)
 
     def run(self, config_lst):
