@@ -7,11 +7,11 @@ from collections import namedtuple
 
 
 logging.basicConfig(
-    format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG,
 )
 
 
-ConfigObj = namedtuple("ConfigObj", "file_in t_start t_end file_out")
+trim_job = namedtuple("trim_job", "file_in t_start t_end file_out")
 
 
 def clean_line(line: str) -> str:
@@ -38,12 +38,13 @@ class Parser:
         job_lst = []
 
         for job in self.parse():
-            if not self.is_valid(job):
+            if not self.job_is_valid(job):
                 validated = False
 
             job_lst.append(job)
 
         if validated:
+            logging.debug("Config file has been validated.")
             return job_lst
         else:
             raise Exception(
@@ -72,7 +73,7 @@ class Parser:
                     counter = count(1)
 
                 else:
-                    args = [arg for arg in line.split(",") if arg]
+                    args = [arg.strip() for arg in line.split(",") if arg]
 
                     # line reads two timestamps
                     if len(args) == 2:
@@ -80,9 +81,9 @@ class Parser:
                     else:
                         logging.debug(f"Not recognised: '{line}'")
 
-                    yield ConfigObj(filename, *args)
+                    yield trim_job(filename, *args)
 
-    def is_valid(self, job) -> bool:
+    def job_is_valid(self, job) -> bool:
 
         file_in, t_start, t_end, file_out = job
 
@@ -102,3 +103,15 @@ class Parser:
             clip_validated = False
 
         return clip_validated
+
+
+if __name__ == "__main__":
+
+    # use this to check config file only
+    VIDEO_FOLDER = ""
+    CONFIG_PATH = ""
+
+    # VIDEO_FOLDER = "/Volumes/MARK_HFS+_2T/UROP/verified/videos"
+    # CONFIG_PATH = "/Users/mark/Documents/CODE/VideoTrim/config_sample.txt"
+
+    Parser(dir_in=VIDEO_FOLDER, config=CONFIG_PATH).get_job_list()
