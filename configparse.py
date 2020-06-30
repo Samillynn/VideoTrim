@@ -27,6 +27,7 @@ def clean_line(line: str) -> str:
     return line.strip()
 
 
+
 class Parser:
     def __init__(self, dir_in, config):
         self.dir_in = dir_in

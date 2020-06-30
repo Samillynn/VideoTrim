@@ -13,6 +13,7 @@ class Trimmer:
         self.dir_out = dir_out
         self.max_workers = max_workers
 
+
     def perform_trim(self, job):
         file_in, t_start, t_end, file_out = job
         file_in = pathjoin(self.dir_in, file_in)
