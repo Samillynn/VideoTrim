@@ -32,7 +32,7 @@ def generate_video_list(video_folder: str):
                 continue
 
     # sort video list by video name alphabetically
-    video_list = sorted(video_list, key=lambda x: x["filename"], reverse=True)
+    video_list = sorted(video_list, key=lambda x: x["filename"])
 
     export_filepath = video_folder / "video_metadata_lst.json"
     with export_filepath.open(mode="w") as f:
