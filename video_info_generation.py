@@ -9,14 +9,20 @@ import shlex
 import json
 from pathlib import Path
 import os
+import logging
+
+# logging.basicConfig(
+#     format="%(levelname)s - %(message)s", level=logging.DEBUG,
+# )
 
 
-def get_video_metadata(video_path: str):
+def get_video_metadata(video_path: str) -> dict:
 
     # check if the file exist
     video_path = Path(video_path)
     if not video_path.is_file():
-        raise ValueError("Invalid video_path: file does not exist.")
+        logging.error(f"Invalid video_path: `{video_path}` does not exist.")
+        raise Exception("Invalid video_path: file does not exist.")
 
     # check if it is a video file
     known_video_formats = (".mp4", ".flv", ".mov", ".avi", ".wmv", ".mkv")
@@ -24,8 +30,8 @@ def get_video_metadata(video_path: str):
     head, tail = os.path.split(video_path_obs)
     name, ext = os.path.splitext(tail)
     if ext not in known_video_formats:
-        print(f"error >>>>> not recognised file: `{tail}`")
-        raise ValueError(f"Invalid video_path: `{tail}` is not a known video format.")
+        logging.warning(f"Invalid video_path: `{tail}` is not a known video format.")
+        raise Exception(f"Invalid video_path: `{tail}` is not a known video format.")
 
     command_template = "ffprobe -v error -select_streams v:0 -show_entries stream=width,height,avg_frame_rate,duration -of json"
     args = shlex.split(command_template)
@@ -43,7 +49,7 @@ def get_video_metadata(video_path: str):
         raise Exception()
     else:
         _data: dict = streams[0]
-        print(f"More than one stream is found at {video_path}")
+        logging.info(f"More than one stream is found at {video_path}")
 
     width: int = _data.get("width")
     height: int = _data.get("height")
@@ -60,7 +66,7 @@ def get_video_metadata(video_path: str):
         "avg_frame_rate": avg_frame_rate,
     }
 
-    print(json.dumps(video_metadata, indent=4))
+    logging.debug(json.dumps(video_metadata, indent=4))
     return video_metadata
 
 
