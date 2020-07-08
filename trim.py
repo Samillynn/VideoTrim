@@ -5,6 +5,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 from configparse import Parser
 from cmdparse import parse_args
+from pathlib import Path
 
 
 class Trimmer:
@@ -13,14 +14,13 @@ class Trimmer:
         self.dir_out = dir_out
         self.max_workers = max_workers
 
-
     def perform_trim(self, job):
         file_in, t_start, t_end, file_out = job
         file_in = pathjoin(self.dir_in, file_in)
         if file_out not in os.listdir(self.dir_out):
             file_out = pathjoin(self.dir_out, file_out)
             subprocess.run(
-                f'ffmpeg -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
+                f'ffmpeg -hwaccel cuvid -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
                 shell=True,
             )
             os.rename(file_out + ".part", file_out)
@@ -50,13 +50,13 @@ def main(config="", dir_in="", dir_out="", max_workers=4):
 
 
 if __name__ == "__main__":
-    config = ""
-    dir_in = ""
-    dir_out = ""
+    config = Path(r"")
+    dir_in = Path(r"")
+    dir_out = Path(r"")
     max_workers = 4
 
     # pass in parameters directly
     main(config, dir_in, dir_out, max_workers)
 
     # use command line
-    main()
+    # main()
