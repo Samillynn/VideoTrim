@@ -20,7 +20,7 @@ class Trimmer:
         if file_out not in os.listdir(self.dir_out):
             file_out = pathjoin(self.dir_out, file_out)
             subprocess.run(
-                f'ffmpeg -hwaccel cuvid -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
+                f'ffmpeg -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
                 shell=True,
             )
             os.rename(file_out + ".part", file_out)
