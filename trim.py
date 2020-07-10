@@ -22,17 +22,25 @@ class Trimmer:
         file_in, t_start, t_end, file_out = job
         file_in = pathjoin(self.dir_in, file_in)
         if file_out not in os.listdir(self.dir_out):
+            _logger.debug(f"Trimming video: {file_out}")
+
             file_out = pathjoin(self.dir_out, file_out)
+            tmp_file_out_name = file_out + ".part"
+
             subprocess.run(
-                f'ffmpeg -loglevel warning -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
+                f'ffmpeg -loglevel warning -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{tmp_file_out_name}"',
                 shell=True,
+                # stdout=subprocess.PIPE,
             )
-            os.rename(file_out + ".part", file_out)
+
+            os.rename(tmp_file_out_name, file_out)
+        else:
+            _logger.debug(f"{file_out} already exist in dir_out")
 
     def run(self, job_lst):
         pool = ProcessPoolExecutor(self.max_workers)
         for job in job_lst:
-            _logger.debug(f"Submitting job: {job}")
+            _logger.debug(f"Job: {job}")
             pool.submit(self.perform_trim, job)
 
 
