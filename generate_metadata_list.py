@@ -4,9 +4,10 @@ import logging
 from pathlib import Path
 from get_vid_info import get_video_metadata
 
-logging.basicConfig(
-    format="%(levelname)s - %(message)s", level=logging.ERROR,
-)
+
+logging.basicConfig(format="%(levelname)s - %(message)s",)
+_logger = logging.getLogger()
+_logger.setLevel(logging.DEBUG)
 
 
 def generate_video_list(video_folder: str):
@@ -22,7 +23,7 @@ def generate_video_list(video_folder: str):
     video_list: list = []
 
     for file in os.listdir(video_folder):
-        logging.debug(file)
+        _logger.debug(file)
         video_filepath = os.path.join(video_folder, file)
         if os.path.isfile(video_filepath):
             try:
@@ -33,6 +34,8 @@ def generate_video_list(video_folder: str):
 
     # sort video list by video name alphabetically
     video_list = sorted(video_list, key=lambda x: x["filename"])
+
+    print(f"\nTotal number of videos: {len(video_list)}\n")
 
     export_filepath = video_folder / "video_metadata_lst.json"
     with export_filepath.open(mode="w") as f:

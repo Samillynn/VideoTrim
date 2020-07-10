@@ -12,8 +12,8 @@ import os
 import logging
 
 logging.basicConfig(format="%(levelname)s - %(message)s",)
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
+_logger = logging.getLogger()
+_logger.setLevel(logging.DEBUG)
 
 
 def get_video_metadata(video_path: str) -> dict:
@@ -21,7 +21,7 @@ def get_video_metadata(video_path: str) -> dict:
     # check if the file exist
     video_path = Path(video_path)
     if not video_path.is_file():
-        logging.error(f"Invalid video_path: `{video_path}` does not exist.")
+        _logger.error(f"Invalid video_path: `{video_path}` does not exist.")
         raise Exception("Invalid video_path: file does not exist.")
 
     # check if it is a video file
@@ -30,7 +30,7 @@ def get_video_metadata(video_path: str) -> dict:
     head, tail = os.path.split(video_path_obs)
     name, ext = os.path.splitext(tail)
     if ext not in known_video_formats:
-        logging.warning(f"Invalid video_path: `{tail}` is not a known video format.")
+        _logger.warning(f"Invalid video_path: `{tail}` is not a known video format.")
         raise Exception(f"Invalid video_path: `{tail}` is not a known video format.")
 
     command_template = "ffprobe -v error -select_streams v:0 -show_entries stream=width,height,avg_frame_rate,duration -of json"
@@ -40,7 +40,7 @@ def get_video_metadata(video_path: str) -> dict:
     out: bytes = proc.communicate()[0]
     json_string: str = out.decode("utf-8").strip()
 
-    # logging.debug(json_string)
+    # _logger.debug(json_string)
 
     json_obj: dict = json.loads(json_string)
 
@@ -51,7 +51,7 @@ def get_video_metadata(video_path: str) -> dict:
         raise Exception()
     else:
         _data: dict = streams[0]
-        logging.info(f"More than one stream is found at {video_path}")
+        _logger.info(f"More than one stream is found at {video_path}")
 
     width: int = _data.get("width")
     height: int = _data.get("height")
@@ -70,7 +70,7 @@ def get_video_metadata(video_path: str) -> dict:
         # "avg_frame_rate": avg_frame_rate,
     }
 
-    logging.debug(json.dumps(video_metadata, indent=4))
+    _logger.debug(json.dumps(video_metadata, indent=4))
     return video_metadata
 
 

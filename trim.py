@@ -7,6 +7,10 @@ from configparse import Parser
 from cmdparse import parse_args
 from pathlib import Path
 
+logging.basicConfig(format="%(levelname)s - %(message)s",)
+_logger = logging.getLogger()
+_logger.setLevel(logging.DEBUG)
+
 
 class Trimmer:
     def __init__(self, dir_in=".", dir_out=".", max_workers=4):
@@ -20,7 +24,7 @@ class Trimmer:
         if file_out not in os.listdir(self.dir_out):
             file_out = pathjoin(self.dir_out, file_out)
             subprocess.run(
-                f'ffmpeg -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
+                f'ffmpeg -loglevel warning -i "{file_in}" -ss {t_start} -to {t_end} -f mp4 -copyts "{file_out + ".part"}"',
                 shell=True,
             )
             os.rename(file_out + ".part", file_out)
@@ -28,10 +32,28 @@ class Trimmer:
     def run(self, job_lst):
         pool = ProcessPoolExecutor(self.max_workers)
         for job in job_lst:
+            _logger.debug(f"Submitting job: {job}")
             pool.submit(self.perform_trim, job)
 
 
 def main(config="", dir_in="", dir_out="", max_workers=4):
+    # validate path first
+    config = Path(config)
+    dir_in = Path(dir_in)
+    dir_out = Path(dir_out)
+
+    if not config.is_file():
+        _logger.error(f"{config} is not a file")
+        return
+
+    if not dir_in.is_dir():
+        _logger.error(f"{dir_in} is not a folder")
+        return
+
+    if not dir_out.is_dir():
+        _logger.error(f"{dir_out} is not a folder")
+        return
+
     # get user inputs
     if config == "":
         config, dir_in, dir_out, max_workers = parse_args()
@@ -50,9 +72,9 @@ def main(config="", dir_in="", dir_out="", max_workers=4):
 
 
 if __name__ == "__main__":
-    config = Path(r"")
-    dir_in = Path(r"")
-    dir_out = Path(r"")
+    config: Path = Path(r"/data/urop/sn_2_copy/...")
+    dir_in: Path = Path(r"/data/urop/sn_2_copy/...")
+    dir_out: Path = Path(r"/data/urop/sn_2_copy/...")
     max_workers = 32  # the workstation has 32 cores
 
     # pass in parameters directly
