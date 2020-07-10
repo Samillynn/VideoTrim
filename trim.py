@@ -72,9 +72,9 @@ def main(config="", dir_in="", dir_out="", max_workers=4):
 
 
 if __name__ == "__main__":
-    config: Path = Path(r"/data/urop/sn_2_copy/...")
-    dir_in: Path = Path(r"/data/urop/sn_2_copy/...")
-    dir_out: Path = Path(r"/data/urop/sn_2_copy/...")
+    config: Path = "/home/UROP/data_urop/REPLACE ME/config.txt"
+    dir_in: Path = "/home/UROP/data_urop/REPLACE ME/original_videos"
+    dir_out: Path = "/home/UROP/data_urop/REPLACE ME/trimmed_videos"
     max_workers = 32  # the workstation has 32 cores
 
     # pass in parameters directly

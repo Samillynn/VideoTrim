@@ -77,7 +77,17 @@ class Parser:
 
                     # line reads two timestamps
                     if len(args) == 2:
-                        args.append(f"{name}_clip_{next(counter)}.mp4")
+
+                        # format serial number suffix
+                        _sn = next(counter)
+                        if _sn <= 9:
+                            _suffix = f"00{str(_sn)}"
+                        elif 10 <= _sn <= 99:
+                            _suffix = f"0{str(_sn)}"
+                        else:
+                            _suffix = str(_sn)
+
+                        args.append(f"{name}_clip_{_suffix}.mp4")
                     else:
                         logging.debug(f"Not recognised: '{line}'")
 

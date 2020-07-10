@@ -44,7 +44,7 @@ def generate_video_list(video_folder: str):
 
 if __name__ == "__main__":
 
-    VIDEO_FOLDER = "REPLACE ME"
+    VIDEO_FOLDER = "/home/UROP/data_urop/REPLACE ME/trimmed_videos"
 
     print("Traversing ...")
     generate_video_list(VIDEO_FOLDER)
