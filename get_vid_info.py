@@ -11,9 +11,9 @@ from pathlib import Path
 import os
 import logging
 
-# logging.basicConfig(
-#     format="%(levelname)s - %(message)s", level=logging.DEBUG,
-# )
+logging.basicConfig(format="%(levelname)s - %(message)s",)
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 
 def get_video_metadata(video_path: str) -> dict:
@@ -40,6 +40,8 @@ def get_video_metadata(video_path: str) -> dict:
     out: bytes = proc.communicate()[0]
     json_string: str = out.decode("utf-8").strip()
 
+    # logging.debug(json_string)
+
     json_obj: dict = json.loads(json_string)
 
     streams: list = json_obj.get("streams", [])
@@ -54,7 +56,8 @@ def get_video_metadata(video_path: str) -> dict:
     width: int = _data.get("width")
     height: int = _data.get("height")
     avg_frame_rate: str = _data.get("avg_frame_rate")
-    frame_rate: int = int(eval(avg_frame_rate)) if avg_frame_rate else None
+    frame_rate: int = round(eval(avg_frame_rate)) if avg_frame_rate else None
+    duration: float = round(float(_data.get("height")), 3)
 
     video_metadata: dict = {
         "filepath": str(video_path_obs),
@@ -62,8 +65,9 @@ def get_video_metadata(video_path: str) -> dict:
         "ext": ext,
         "width": width,
         "height": height,
-        "frame_rate": frame_rate,
-        "avg_frame_rate": avg_frame_rate,
+        "duration": duration,  # in number of seconds
+        "fps": frame_rate,  # frame per seconds
+        # "avg_frame_rate": avg_frame_rate,
     }
 
     logging.debug(json.dumps(video_metadata, indent=4))

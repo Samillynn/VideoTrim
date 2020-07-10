@@ -2,7 +2,7 @@ import os
 import json
 import logging
 from pathlib import Path
-from video_info_generation import get_video_metadata
+from get_vid_info import get_video_metadata
 
 logging.basicConfig(
     format="%(levelname)s - %(message)s", level=logging.ERROR,

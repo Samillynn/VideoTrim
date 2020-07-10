@@ -53,7 +53,7 @@ if __name__ == "__main__":
     config = Path(r"")
     dir_in = Path(r"")
     dir_out = Path(r"")
-    max_workers = 4
+    max_workers = 32  # the workstation has 32 cores
 
     # pass in parameters directly
     main(config, dir_in, dir_out, max_workers)

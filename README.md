@@ -82,8 +82,8 @@ Example Output:
         "ext": ".mp4",
         "width": 1280,
         "height": 720,
-        "frame_rate": 29,
-        "avg_frame_rate": "30000/1001"
+        "duration": 234.22,
+        "fps": 30
     },
     {
         "filepath": "/Users/mark/Downloads/vid-d/videos/zr0Y4wv_-LU.mp4",
@@ -91,8 +91,8 @@ Example Output:
         "ext": ".mp4",
         "width": 1280,
         "height": 720,
-        "frame_rate": 29,
-        "avg_frame_rate": "30000/1001"
+        "duration": 720.0,
+        "fps": 30
     }
 ]
 ```
