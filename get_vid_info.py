@@ -67,7 +67,7 @@ def get_video_metadata(video_path: str) -> dict:
         "height": height,
         "duration": duration,  # in number of seconds
         "fps": frame_rate,  # frame per seconds
-        # "avg_frame_rate": avg_frame_rate,
+        "avg_frame_rate": avg_frame_rate,
     }
 
     _logger.debug(json.dumps(video_metadata, indent=4))
