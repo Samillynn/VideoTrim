@@ -1,4 +1,5 @@
 import os
+import logging
 import subprocess
 from os.path import join as pathjoin
 from concurrent.futures import ProcessPoolExecutor
@@ -7,7 +8,7 @@ from configparse import Parser
 from cmdparse import parse_args
 from pathlib import Path
 
-logging.basicConfig(format="%(levelname)s - %(message)s",)
+logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s")
 _logger = logging.getLogger()
 _logger.setLevel(logging.DEBUG)
 

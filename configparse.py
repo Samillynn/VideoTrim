@@ -6,9 +6,9 @@ from typing import Iterator, Tuple
 from collections import namedtuple
 
 
-logging.basicConfig(
-    format="%(asctime)s - %(levelname)s - %(message)s", level=logging.DEBUG,
-)
+logging.basicConfig(format="%(levelname)s - %(message)s")
+_logger = logging.getLogger()
+_logger.setLevel(logging.DEBUG)
 
 
 trim_job = namedtuple("trim_job", "file_in t_start t_end file_out")
@@ -44,7 +44,7 @@ class Parser:
             job_lst.append(job)
 
         if validated:
-            logging.debug("Config file has been validated.")
+            _logger.debug("Config file has been validated.")
             return job_lst
         else:
             raise Exception(
@@ -89,7 +89,7 @@ class Parser:
 
                         args.append(f"{name}_clip_{_suffix}.mp4")
                     else:
-                        logging.debug(f"Not recognised: '{line}'")
+                        _logger.debug(f"Not recognised: '{line}'")
 
                     yield trim_job(filename, *args)
 
@@ -102,14 +102,14 @@ class Parser:
 
         # check if video file exist
         if file_in not in self.file_lst:
-            logging.error(f"'{file_in}' doesn't exist in '{self.dir_in}'")
+            _logger.error(f"'{file_in}' doesn't exist in '{self.dir_in}'")
             clip_validated = False
         # check time format
         if not re.match(pattern, t_start):
-            logging.error(f"time_start: '{t_start}' doesn't satisfy time format")
+            _logger.error(f"time_start: '{t_start}' doesn't satisfy time format")
             clip_validated = False
         if not re.match(pattern, t_end):
-            logging.error(f"time_end: '{t_end}' doesn't satisfy time format")
+            _logger.error(f"time_end: '{t_end}' doesn't satisfy time format")
             clip_validated = False
 
         return clip_validated

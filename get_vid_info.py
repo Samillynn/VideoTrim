@@ -11,7 +11,7 @@ from pathlib import Path
 import os
 import logging
 
-logging.basicConfig(format="%(levelname)s - %(message)s",)
+logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s")
 _logger = logging.getLogger()
 _logger.setLevel(logging.DEBUG)
 
