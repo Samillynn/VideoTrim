@@ -57,7 +57,7 @@ def get_video_metadata(video_path: str) -> dict:
     height: int = _data.get("height")
     avg_frame_rate: str = _data.get("avg_frame_rate")
     frame_rate: int = round(eval(avg_frame_rate)) if avg_frame_rate else None
-    duration: float = round(float(_data.get("height")), 3)
+    duration: float = round(float(_data.get("duration")), 2)
 
     video_metadata: dict = {
         "filepath": str(video_path_obs),
