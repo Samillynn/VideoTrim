@@ -48,7 +48,7 @@ class Parser:
             return job_lst
         else:
             raise Exception(
-                "\n\nSome errors detected in your {self.config_fp}\nPlease check logs above."
+                f"\n\nSome errors detected in your {self.config_fp}\nPlease check logs above."
             )
 
     def parse(self) -> Iterator[Tuple[str, str, str, str]]:
