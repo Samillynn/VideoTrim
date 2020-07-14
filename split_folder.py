@@ -29,6 +29,7 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
         filepath = from_folder / filename
         if filepath.is_file():
             counter += 1
+            print(counter)
             print(f"Moving {filepath}")
             print(f"...vid duration: {video.get('duration')}s")
         else:
@@ -89,6 +90,10 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                 print(err)
                 return
         elif counter == 100:
+            # set counter to zero
+            counter = 0
+            # folder_count next
+            folder_count += 1
             # copy file
             try:
                 new_filepath: Path = dst_folder_path / filename
@@ -103,10 +108,7 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                 print("copy file failed")
                 print(err)
                 return
-            # set counter to zero
-            counter = 0
-            # folder_count next
-            folder_count += 1
+
         else:
             print("unexpected: something is wrong")
             return
