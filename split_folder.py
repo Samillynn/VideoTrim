@@ -15,7 +15,7 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
     with json_filepath.open() as f:
         vid_lst: list = json.load(f)
 
-    vid_lst = sorted(vid_lst, key=lambda x: (x[duration], x[filename]))
+    vid_lst = sorted(vid_lst, key=lambda x: (x["duration"], x["filename"]))
 
     counter = 0
     folder_count = 1
@@ -47,7 +47,7 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
             dst_folder_path: Path = to_folder_base / dst_folder_name
             try:
                 os.mkdir(dst_folder_path)
-                print(f"\n>>>> new dir created: {dst_folder_path}\n")
+                print(f">>>> new dir created: {dst_folder_path}")
             except Exception as err:
                 print("creating directory failed")
                 print(err)
@@ -61,7 +61,7 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                     continue
                 else:
                     shutil.copyfile(filepath, new_filepath)
-                    print(f"...copy successful")
+                    print(f"...copy successful\n")
 
             except Exception as err:
                 print("copy file failed")
@@ -77,7 +77,7 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                     continue
                 else:
                     shutil.copyfile(filepath, new_filepath)
-                    print(f"...copy successful")
+                    print(f"...copy successful\n")
             except Exception as err:
                 print("copy file failed")
                 print(err)
@@ -91,7 +91,7 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                     continue
                 else:
                     shutil.copyfile(filepath, new_filepath)
-                    print(f"...copy successful")
+                    print(f"...copy successful\n")
             except Exception as err:
                 print("copy file failed")
                 print(err)
