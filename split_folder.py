@@ -2,6 +2,7 @@ import shutil
 import json
 import os
 from pathlib import Path
+import subprocess
 
 
 def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str):
@@ -60,8 +61,9 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                     print(f"{new_filepath} alr exist")
                     continue
                 else:
-                    shutil.copyfile(filepath, new_filepath)
-                    print(f"...copy successful\n")
+                    # shutil.copyfile(filepath, new_filepath)
+                    subprocess.call(["mv", filepath, new_filepath])
+                    print(f"...move successful\n")
 
             except Exception as err:
                 print("copy file failed")
@@ -76,8 +78,9 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                     print(f"{new_filepath} alr exist")
                     continue
                 else:
-                    shutil.copyfile(filepath, new_filepath)
-                    print(f"...copy successful\n")
+                    # shutil.copyfile(filepath, new_filepath)
+                    subprocess.call(["mv", filepath, new_filepath])
+                    print(f"...move successful\n")
             except Exception as err:
                 print("copy file failed")
                 print(err)
@@ -90,8 +93,9 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
                     print(f"{new_filepath} alr exist")
                     continue
                 else:
-                    shutil.copyfile(filepath, new_filepath)
-                    print(f"...copy successful\n")
+                    # shutil.copyfile(filepath, new_filepath)
+                    subprocess.call(["mv", filepath, new_filepath])
+                    print(f"...move successful\n")
             except Exception as err:
                 print("copy file failed")
                 print(err)
