@@ -47,8 +47,11 @@ def split_into_folders(json_filepath: str, from_folder: str, to_folder_base: str
             dst_folder_name = f"{folder_prefix}{folder_suffix}"
             dst_folder_path: Path = to_folder_base / dst_folder_name
             try:
-                os.mkdir(dst_folder_path)
-                print(f">>>> new dir created: {dst_folder_path}")
+                if not dst_folder_path.is_dir():
+                    os.mkdir(dst_folder_path)
+                    print(f">>>> new dir created: {dst_folder_path}")
+                else:
+                    print(f"{dst_folder_path} dir alr exist")
             except Exception as err:
                 print("creating directory failed")
                 print(err)
